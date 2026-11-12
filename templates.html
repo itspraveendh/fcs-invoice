@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Template Designer - FAB STEEL Invoice System</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/invoice-template.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/print.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- SIDEBAR -->
+    <aside class="app-sidebar" id="app-sidebar"></aside>
+
+    <!-- MAIN CONTAINER -->
+    <div class="app-main">
+      <!-- NAVBAR -->
+      <header class="app-navbar" id="app-navbar"></header>
+
+      <!-- CONTENT -->
+      <main class="app-content">
+        <!-- Header -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+          <div>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-1 small">
+                <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Template Designer</li>
+              </ol>
+            </nav>
+            <h3 class="fw-bold mb-0">Customizable Invoice Template Designer</h3>
+            <p class="text-muted small mb-0">Recreate the uploaded Excel invoice format or create custom commercial themes</p>
+          </div>
+          <div class="d-flex flex-wrap gap-2 mt-2 mt-sm-0">
+            <button class="btn btn-outline-secondary btn-sm" onclick="TemplatesManager.resetAllTemplates()">
+              <i class="bi bi-arrow-counterclockwise me-1"></i> Reset to Excel Default
+            </button>
+            <button class="btn btn-outline-secondary btn-sm" onclick="TemplatesManager.exportCurrentTemplateJson()">
+              <i class="bi bi-download me-1"></i> Export Template JSON
+            </button>
+            <label class="btn btn-outline-secondary btn-sm mb-0">
+              <i class="bi bi-upload me-1"></i> Import JSON
+              <input type="file" id="template-import-file" accept=".json" class="d-none" />
+            </label>
+            <button class="btn btn-success btn-sm" onclick="TemplatesManager.setAsDefaultTemplate()">
+              <i class="bi bi-check-circle me-1"></i> Set as Default
+            </button>
+            <button class="btn btn-primary btn-sm shadow-sm" onclick="TemplatesManager.saveCurrentTemplate()">
+              <i class="bi bi-save me-1"></i> Save Changes
+            </button>
+          </div>
+        </div>
+
+        <!-- TEMPLATE SELECTION CARDS -->
+        <div class="row g-3 mb-4" id="template-cards-list">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- TWO-PANEL DESIGNER WORKSPACE -->
+        <div class="creator-container">
+          
+          <!-- LEFT PANEL: CUSTOMIZATION CONTROLS -->
+          <div class="creator-editor-panel">
+            
+            <!-- SECTION 1: TEMPLATE METADATA -->
+            <div class="card mb-3">
+              <div class="card-header bg-light">
+                <i class="bi bi-sliders text-primary me-2"></i>Template Identity & Typography
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label" for="tpl-name">Template Name</label>
+                    <input type="text" id="tpl-name" class="form-control form-control-sm fw-bold" />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="tpl-desc">Description</label>
+                    <input type="text" id="tpl-desc" class="form-control form-control-sm" />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="tpl-font">Typography / Font Family</label>
+                    <select id="tpl-font" class="form-select form-select-sm">
+                      <option value="'Bookman Old Style', 'Calibri', serif, sans-serif">Bookman Old Style & Calibri (Original Excel Font)</option>
+                      <option value="'Inter', -apple-system, sans-serif">Inter (Modern Clean UI)</option>
+                      <option value="'Calibri', Candara, Segoe, sans-serif">Calibri (Standard Office)</option>
+                      <option value="'Roboto', sans-serif">Roboto</option>
+                      <option value="'Times New Roman', serif">Times New Roman (Formal)</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label" for="tpl-page-size">Page Size</label>
+                    <select id="tpl-page-size" class="form-select form-select-sm">
+                      <option value="A4">A4 (Standard 210x297mm)</option>
+                      <option value="A5">A5</option>
+                      <option value="Letter">US Letter</option>
+                      <option value="Legal">Legal</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label" for="tpl-orientation">Orientation</label>
+                    <select id="tpl-orientation" class="form-select form-select-sm">
+                      <option value="portrait">Portrait</option>
+                      <option value="landscape">Landscape</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 2: COLOR PALETTE -->
+            <div class="card mb-3">
+              <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-palette text-primary me-2"></i>Color Palette (Original Excel Accents)</span>
+                <span class="badge bg-info-subtle text-info border">#4BD0FF Cyan & #FFFF00 Yellow</span>
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <label class="form-label" for="tpl-color-header">Header & Banners Fill</label>
+                    <div class="input-group input-group-sm">
+                      <input type="color" id="tpl-color-header" class="form-control form-control-color w-25" />
+                      <input type="text" class="form-control" value="#4BD0FF" readonly />
+                    </div>
+                    <small class="text-muted">Excel Banner Cyan</small>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="tpl-color-table-header">Table Header Fill</label>
+                    <div class="input-group input-group-sm">
+                      <input type="color" id="tpl-color-table-header" class="form-control form-control-color w-25" />
+                      <input type="text" class="form-control" value="#4BD0FF" readonly />
+                    </div>
+                    <small class="text-muted">Excel Item Table Header</small>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="tpl-color-total-row">Totals & Highlight Fill</label>
+                    <div class="input-group input-group-sm">
+                      <input type="color" id="tpl-color-total-row" class="form-control form-control-color w-25" />
+                      <input type="text" class="form-control" value="#FFFF00" readonly />
+                    </div>
+                    <small class="text-muted">Excel Yellow Row 32 & GSTIN</small>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="tpl-color-grey">Subtle Grey Panels</label>
+                    <div class="input-group input-group-sm">
+                      <input type="color" id="tpl-color-grey" class="form-control form-control-color w-25" />
+                      <input type="text" class="form-control" value="#D9D9D9" readonly />
+                    </div>
+                    <small class="text-muted">Amount in Words & Tax Rows</small>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="tpl-color-border">Table Borders Color</label>
+                    <div class="input-group input-group-sm">
+                      <input type="color" id="tpl-color-border" class="form-control form-control-color w-25" />
+                      <input type="text" class="form-control" value="#000000" readonly />
+                    </div>
+                    <small class="text-muted">Grid Borders (Black)</small>
+                  </div>
+                  <div class="col-md-4 d-flex align-items-end">
+                    <button type="button" class="btn btn-sm btn-outline-secondary w-100" onclick="TemplatesManager.duplicateCurrentTemplate()">
+                      <i class="bi bi-copy me-1"></i> Duplicate Template
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 3: SECTION VISIBILITY & ORDERING -->
+            <div class="card mb-4">
+              <div class="card-header bg-light">
+                <i class="bi bi-layers text-primary me-2"></i>Invoice Document Sections & Ordering
+              </div>
+              <div class="card-body">
+                <p class="small text-muted mb-2">Enable, disable, or reorder the structural sections of the invoice document:</p>
+                <div id="sections-reorder-container">
+                  <!-- Filled dynamically -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT PANEL: LIVE TEMPLATE PREVIEW -->
+          <div class="creator-preview-panel">
+            <div class="card p-2 mb-2 preview-control-bar">
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge bg-primary-subtle text-primary border">TEMPLATE PREVIEW</span>
+                  <small class="text-muted">Live rendering with sample invoice</small>
+                </div>
+              </div>
+            </div>
+            <div class="preview-scroll-viewport zoom-100" id="preview-viewport">
+              <div id="template-preview-container">
+                <!-- Live preview -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- VENDOR SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- APPLICATION SCRIPTS -->
+  <script src="assets/js/default-assets.js"></script>
+  <script src="assets/js/excel-template-base64.js"></script>
+  <script src="assets/js/default-data.js"></script>
+  <script src="assets/js/calculations.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/template-engine.js"></script>
+  <script src="assets/js/export-csv.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/templates-manager.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      UI.init('templates');
+      TemplatesManager.init();
+    });
+  </script>
+</body>
+</html>
+

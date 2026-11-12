@@ -1,0 +1,559 @@
+/**
+ * Invoice Template Stylesheet
+ * 1:1 Precision reproduction of "GST Tax Invoice Format" from:
+ * FSE-2026-27-XXX- SAMPLE - XX-XX-XXXX.xlsx
+ */
+
+/* Multi-Page Container */
+.multi-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+}
+
+/* Page Sizes and Orientation */
+.invoice-page {
+  width: 210mm;
+  min-height: 297mm;
+  max-width: 210mm;
+  padding: 8mm 10mm;
+  margin: 0 auto;
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+  position: relative;
+  font-size: 10pt;
+  line-height: 1.25;
+  display: flex;
+  flex-direction: column;
+}
+
+.invoice-page.a4-landscape {
+  width: 297mm;
+  min-height: 210mm;
+  max-width: 297mm;
+}
+
+.invoice-page.a5-portrait {
+  width: 148mm;
+  min-height: 210mm;
+  max-width: 148mm;
+  padding: 5mm 6mm;
+  font-size: 8.5pt;
+}
+
+.invoice-page.a5-landscape {
+  width: 210mm;
+  min-height: 148mm;
+  max-width: 210mm;
+  padding: 5mm 6mm;
+  font-size: 8.5pt;
+}
+
+.invoice-page.letter-portrait {
+  width: 215.9mm;
+  min-height: 279.4mm;
+  max-width: 215.9mm;
+}
+
+.invoice-page.legal-portrait {
+  width: 215.9mm;
+  min-height: 355.6mm;
+  max-width: 215.9mm;
+}
+
+/* Zoom Levels for Preview */
+.zoom-50 .invoice-page { transform: scale(0.5); transform-origin: top center; margin-bottom: -148mm; }
+.zoom-75 .invoice-page { transform: scale(0.75); transform-origin: top center; margin-bottom: -74mm; }
+.zoom-100 .invoice-page { transform: scale(1.0); transform-origin: top center; }
+.zoom-125 .invoice-page { transform: scale(1.25); transform-origin: top center; margin-bottom: 74mm; }
+
+/* Continuation Page Header */
+.continuation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #000000;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+
+.continuation-title {
+  font-family: 'Bookman Old Style', serif;
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+.continuation-meta {
+  font-size: 8.5pt;
+  color: #333333;
+}
+
+.continuation-badge {
+  background-color: #4BD0FF;
+  border: 1px solid #000000;
+  padding: 2px 8px;
+  font-weight: bold;
+  font-size: 8pt;
+}
+
+/* Page Footer Bar */
+.page-footer-bar {
+  margin-top: auto;
+  padding-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 7.5pt;
+  color: #555555;
+  border-top: 1px solid #cccccc;
+}
+
+/* Common Excel Grid Table */
+.excel-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  table-layout: fixed !important;
+  margin-bottom: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.excel-table td, 
+.excel-table th {
+  border: 1px solid #000000;
+  padding: 2.5px 3.5px;
+  vertical-align: middle;
+  font-size: 8.5pt;
+  color: #000000;
+  box-sizing: border-box;
+}
+
+/* SECTION 1: HEADER & LOGOS (Rows 1-4) */
+.header-table {
+  border-bottom: 2px solid #000000;
+}
+
+.header-logo-cell {
+  background-color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  padding: 6px;
+  width: 32%;
+}
+
+.logo-flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.excel-logo-img {
+  max-height: 82px !important;
+  max-width: 155px !important;
+  object-fit: contain;
+}
+
+.excel-badge-img {
+  max-height: 44px !important;
+  max-width: 190px !important;
+  object-fit: contain;
+}
+
+.header-info-cell {
+  text-align: center;
+  padding: 4px;
+}
+
+.company-title-banner {
+  background-color: #4BD0FF;
+  font-family: 'Bookman Old Style', serif;
+  font-size: 13.5pt;
+  font-weight: bold;
+  padding: 3px 6px;
+  border: 1px solid #000000;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+
+.company-sub-line {
+  font-family: 'Bookman Old Style', serif;
+  font-size: 9.5pt;
+  font-weight: bold;
+  line-height: 1.25;
+}
+
+.company-gstin-highlight {
+  background-color: #FFFF00;
+  display: inline-block;
+  font-family: 'Bookman Old Style', serif;
+  font-size: 10pt;
+  font-weight: bold;
+  padding: 2px 8px;
+  border: 1px solid #000000;
+  margin-top: 3px;
+}
+
+/* SECTION 2: TITLE & COPY TYPE (Rows 6-8) */
+.tax-invoice-banner {
+  background-color: #4BD0FF;
+  font-family: 'Bookman Old Style', serif;
+  font-size: 15pt;
+  font-weight: bold;
+  text-align: center;
+  padding: 3px;
+  letter-spacing: 1px;
+}
+
+.copy-type-banner {
+  background-color: #D9D9D9;
+  font-family: 'Bookman Old Style', serif;
+  font-size: 9pt;
+  font-weight: bold;
+  text-align: center;
+  padding: 2px;
+}
+
+/* SECTION 3: METADATA 4-ROW GRID (Rows 9-12) */
+.meta-table td {
+  font-size: 9pt;
+  padding: 2.5px 5px;
+}
+
+.highlight-code {
+  font-weight: bold;
+}
+
+/* SECTION 4: BILLING HEADERS & CONTENT */
+.billing-header-row td {
+  background-color: #4BD0FF;
+  font-weight: bold;
+  font-size: 9.5pt;
+  padding: 3px;
+}
+
+.billing-content-cell {
+  font-size: 9pt;
+  line-height: 1.3;
+  padding: 3px 5px;
+  vertical-align: top;
+}
+
+.billing-address {
+  margin: 2px 0;
+}
+
+.row-flex {
+  display: flex;
+  align-items: center;
+}
+
+/* SECTION 5: ITEMS TABLE (Rows 22-32) */
+.items-table {
+  width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+}
+
+.items-table thead tr {
+  background-color: #4BD0FF !important;
+}
+
+.items-table thead th {
+  background-color: #4BD0FF !important;
+  color: #000000 !important;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #000000 !important;
+  padding: 2px 2px;
+  font-size: 7.8pt;
+  line-height: 1.15;
+  height: 44px;
+  box-sizing: border-box;
+}
+
+.th-cell {
+  background-color: #4BD0FF !important;
+  vertical-align: middle !important;
+  height: 44px !important;
+  padding: 0 !important;
+}
+
+.th-flex-center {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+  height: 44px !important;
+  min-height: 44px;
+  text-align: center;
+  padding: 2px 3px;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: manual;
+  line-height: 1.15;
+}
+
+.th-cell-gst-group {
+  padding: 0 !important;
+  vertical-align: top !important;
+  height: 44px !important;
+  background-color: #4BD0FF !important;
+}
+
+.th-group-header {
+  font-size: 7.8pt;
+  font-weight: bold;
+  border-bottom: 1px solid #000000;
+  padding: 0;
+  line-height: 22px;
+  height: 22px;
+  text-align: center;
+  background-color: #4BD0FF;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.th-sub-row {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  height: 22px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+.th-sub-col {
+  font-size: 7.2pt;
+  font-weight: bold;
+  line-height: 22px;
+  height: 22px;
+  background-color: #4BD0FF;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.items-table tbody td {
+  font-size: 8pt;
+  padding: 0 !important;
+  line-height: 1.2;
+  border: 1px solid #000000;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+/* Flexbox cell layout preventing text overlap across columns */
+.cell-flex {
+  display: flex !important;
+  align-items: center;
+  width: 100% !important;
+  min-height: 24px;
+  padding: 2px 3px;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+.cell-flex-center {
+  justify-content: center;
+  text-align: center;
+}
+
+.cell-flex-left {
+  justify-content: flex-start;
+  text-align: left;
+  word-break: normal;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.25;
+}
+
+.cell-flex-right {
+  justify-content: flex-end;
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Cells formatting */
+.items-table .cell-desc {
+  text-align: left;
+}
+
+.items-table .cell-num {
+  text-align: right;
+}
+
+.items-table .cell-center {
+  text-align: center;
+}
+
+.excel-item-row td {
+  font-size: 8pt;
+}
+
+.excel-total-row td {
+  background-color: #FFFF00 !important;
+  font-weight: bold;
+  font-size: 8.5pt;
+  border: 1px solid #000000;
+  padding: 3px 2.5px;
+}
+
+.font-total-title {
+  font-family: 'Bookman Old Style', serif;
+  font-size: 11pt !important;
+  font-weight: bold;
+}
+
+/* BOTTOM SECTION: EXACT ROW-BY-ROW EXCEL TABLE (Rows 33-49) */
+.bottom-exact-table {
+  width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  box-sizing: border-box !important;
+}
+
+.bottom-exact-table td {
+  border: 1px solid #000000;
+  padding: 2.5px 4px;
+  vertical-align: middle;
+  font-size: 8pt;
+  line-height: 1.25;
+  box-sizing: border-box;
+}
+
+.term-cell-text {
+  font-size: 7.5pt !important;
+  line-height: 1.2;
+  padding: 3px 4px !important;
+  vertical-align: top !important;
+}
+
+.cert-cell-text {
+  font-family: 'Bookman Old Style', serif;
+  font-size: 7pt !important;
+  line-height: 1.15;
+  padding: 3px 4px !important;
+  text-align: center;
+}
+
+.signature-cell-box {
+  vertical-align: middle !important;
+  text-align: center !important;
+  padding: 6px !important;
+  height: 120px !important;
+  background-color: #ffffff;
+}
+
+.excel-signature-img {
+  max-height: 110px !important;
+  max-width: 230px !important;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: inline-block;
+}
+
+/* FOOTER ROWS */
+.footer-table td {
+  padding: 2px 4px;
+  text-align: center;
+  font-size: 8.5pt;
+}
+
+.footer-banner-cell {
+  background-color: #4BD0FF;
+  border: 1px solid #000000;
+  font-weight: bold;
+  font-size: 8pt;
+}
+
+/* Document Export Sandbox (Off-screen Canva-Style Renderer) */
+#document-export-sandbox {
+  position: fixed !important;
+  left: -99999px !important;
+  top: 0 !important;
+  width: 210mm !important;
+  background: #ffffff !important;
+  z-index: -99999 !important;
+  opacity: 1 !important;
+  pointer-events: none !important;
+  transform: none !important;
+}
+
+#document-export-sandbox .invoice-page {
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+
+/* Print Stylesheet */
+@media print {
+  body {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .sidebar, 
+  .top-navbar, 
+  .creator-editor-panel, 
+  .preview-control-bar, 
+  .export-loading-overlay, 
+  .btn, 
+  .nav, 
+  header, 
+  footer,
+  #document-export-sandbox {
+    display: none !important;
+  }
+
+  .creator-container {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .creator-preview-panel {
+    width: 100% !important;
+    position: static !important;
+    max-height: none !important;
+  }
+
+  .preview-scroll-viewport {
+    background: transparent !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .multi-page-container {
+    gap: 0 !important;
+    display: block !important;
+  }
+
+  .invoice-page {
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 8mm 10mm !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    transform: none !important;
+  }
+
+  .invoice-page:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+}
+
+

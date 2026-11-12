@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - FAB STEEL Invoice Management System</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/invoice-template.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/print.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- SIDEBAR -->
+    <aside class="app-sidebar" id="app-sidebar"></aside>
+
+    <!-- MAIN CONTAINER -->
+    <div class="app-main">
+      <!-- NAVBAR -->
+      <header class="app-navbar" id="app-navbar"></header>
+
+      <!-- CONTENT -->
+      <main class="app-content">
+        <!-- Breadcrumb & Page Header -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+          <div>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-1 small">
+                <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+              </ol>
+            </nav>
+            <h3 class="fw-bold mb-0">Executive Dashboard</h3>
+            <p class="text-muted small mb-0">Live GST billing, revenue metrics, and invoice pipeline</p>
+          </div>
+          <div class="d-flex gap-2 mt-2 mt-sm-0">
+            <a href="invoices.html" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
+              <i class="bi bi-receipt"></i>
+              <span>View All</span>
+            </a>
+            <a href="create-invoice.html" class="btn btn-primary btn-sm d-flex align-items-center gap-1 shadow-sm">
+              <i class="bi bi-plus-lg"></i>
+              <span>Create Invoice</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- AI FINANCIAL INTELLIGENCE HERO BANNER -->
+        <div class="ai-intelligence-banner mb-4">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+            <div class="d-flex align-items-center gap-3">
+              <span class="ai-badge">
+                <span class="ai-pulse-dot"></span>
+                <span>AI Financial Engine</span>
+              </span>
+              <span class="text-white-50 small d-none d-md-inline">Live Autonomous Reconciler</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-white bg-opacity-10 text-white border border-white border-opacity-25 py-2 px-3 fw-medium">
+                <i class="bi bi-shield-check text-success me-1"></i> GSTIN & Bank Compliant
+              </span>
+            </div>
+          </div>
+
+          <div class="row align-items-center g-3">
+            <div class="col-lg-6 col-12">
+              <h4 class="fw-bold text-white mb-1">Smart Cashflow & Invoicing Intelligence</h4>
+              <p class="text-white-50 small mb-0">
+                Autonomous reconciliation of billing pipelines, multi-state GST distributions, and corporate collections.
+              </p>
+            </div>
+            <div class="col-lg-6 col-12">
+              <div class="row g-2">
+                <div class="col-sm-4 col-12">
+                  <div class="ai-pill-metric">
+                    <div class="text-white-50 small fw-semibold text-uppercase" style="font-size: 0.7rem;">Realization Rate</div>
+                    <div class="fs-5 fw-bold text-white mt-1" id="ai-realization-rate">0.0%</div>
+                    <div class="text-success small fw-medium" style="font-size: 0.72rem;">
+                      <i class="bi bi-arrow-up-right"></i> Cashflow Health
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 col-12">
+                  <div class="ai-pill-metric">
+                    <div class="text-white-50 small fw-semibold text-uppercase" style="font-size: 0.7rem;">GST Pool Managed</div>
+                    <div class="fs-5 fw-bold text-white mt-1" id="ai-gst-total">₹0</div>
+                    <div class="text-info small fw-medium" style="font-size: 0.72rem;">
+                      <i class="bi bi-bank"></i> CGST/SGST/IGST
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 col-12">
+                  <div class="ai-pill-metric">
+                    <div class="text-white-50 small fw-semibold text-uppercase" style="font-size: 0.7rem;">Active Corporates</div>
+                    <div class="fs-5 fw-bold text-white mt-1" id="ai-clients-count">0</div>
+                    <div class="text-warning small fw-medium" style="font-size: 0.72rem;">
+                      <i class="bi bi-buildings"></i> Client Accounts
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 MODERN FLEX KPI METRIC CARDS (ZERO TRUNCATION - FULL VISIBILITY) -->
+        <div class="row g-3 mb-4">
+          <!-- Card 1: Total Invoices -->
+          <div class="col-xl-4 col-md-6 col-12">
+            <div class="card ai-stat-card card-accent-indigo">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <span class="text-muted small fw-bold text-uppercase letter-spacing-1">Total Invoices</span>
+                  <div class="ai-amount-display" id="kpi-total-invoices">0</div>
+                </div>
+                <div class="stat-icon-gradient icon-gradient-indigo">
+                  <i class="bi bi-receipt-cutoff"></i>
+                </div>
+              </div>
+              <div class="ai-card-footer">
+                <span class="ai-stat-badge ai-stat-badge-primary">
+                  <i class="bi bi-folder2-open"></i> Billing Ledger
+                </span>
+                <span class="text-muted small">All active records</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Total Billing Value (PIPELINE) -->
+          <div class="col-xl-4 col-md-6 col-12">
+            <div class="card ai-stat-card card-accent-cyan">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <span class="text-muted small fw-bold text-uppercase letter-spacing-1">Total Invoice Value</span>
+                  <div class="ai-amount-display text-primary" id="kpi-total-value">₹0</div>
+                </div>
+                <div class="stat-icon-gradient icon-gradient-cyan">
+                  <i class="bi bi-cash-stack"></i>
+                </div>
+              </div>
+              <div class="ai-card-footer">
+                <span class="ai-stat-badge ai-stat-badge-info">
+                  <i class="bi bi-graph-up-arrow"></i> Gross Pipeline
+                </span>
+                <span class="text-muted small">Inclusive of GST</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Paid Collections -->
+          <div class="col-xl-4 col-md-6 col-12">
+            <div class="card ai-stat-card card-accent-emerald">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <span class="text-muted small fw-bold text-uppercase letter-spacing-1">Paid Collections</span>
+                  <div class="ai-amount-display text-success" id="kpi-paid-amount">₹0</div>
+                </div>
+                <div class="stat-icon-gradient icon-gradient-emerald">
+                  <i class="bi bi-check-circle-fill"></i>
+                </div>
+              </div>
+              <div class="ai-card-footer">
+                <span class="ai-stat-badge ai-stat-badge-success" id="kpi-paid-badge">
+                  <i class="bi bi-shield-check"></i> Settled
+                </span>
+                <span class="text-muted small">Realized in bank</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Pending Balance -->
+          <div class="col-xl-4 col-md-6 col-12">
+            <div class="card ai-stat-card card-accent-amber">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <span class="text-muted small fw-bold text-uppercase letter-spacing-1">Pending Balance</span>
+                  <div class="ai-amount-display text-warning" id="kpi-pending-amount">₹0</div>
+                </div>
+                <div class="stat-icon-gradient icon-gradient-amber">
+                  <i class="bi bi-hourglass-split"></i>
+                </div>
+              </div>
+              <div class="ai-card-footer">
+                <span class="ai-stat-badge ai-stat-badge-warning">
+                  <i class="bi bi-clock-history"></i> Outstanding
+                </span>
+                <span class="text-muted small">Awaiting remittance</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5: Overdue Invoices -->
+          <div class="col-xl-4 col-md-6 col-12">
+            <div class="card ai-stat-card card-accent-rose">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <span class="text-muted small fw-bold text-uppercase letter-spacing-1">Overdue Invoices</span>
+                  <div class="ai-amount-display text-danger" id="kpi-overdue-invoices">0</div>
+                </div>
+                <div class="stat-icon-gradient icon-gradient-rose">
+                  <i class="bi bi-exclamation-octagon-fill"></i>
+                </div>
+              </div>
+              <div class="ai-card-footer">
+                <span class="ai-stat-badge ai-stat-badge-danger">
+                  <i class="bi bi-bell-fill"></i> Action Needed
+                </span>
+                <span class="text-muted small">Past 21-day terms</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 6: Draft Invoices -->
+          <div class="col-xl-4 col-md-6 col-12">
+            <div class="card ai-stat-card card-accent-violet">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <span class="text-muted small fw-bold text-uppercase letter-spacing-1">Draft Invoices</span>
+                  <div class="ai-amount-display text-purple" style="color: #8b5cf6;" id="kpi-draft-invoices">0</div>
+                </div>
+                <div class="stat-icon-gradient icon-gradient-violet">
+                  <i class="bi bi-pencil-square"></i>
+                </div>
+              </div>
+              <div class="ai-card-footer">
+                <span class="ai-stat-badge ai-stat-badge-purple">
+                  <i class="bi bi-file-earmark-diff"></i> In Preparation
+                </span>
+                <span class="text-muted small">Ready to finalize</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK ACTIONS BAR -->
+        <div class="card p-3 mb-4 bg-light border-0 shadow-sm rounded-3">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-2">
+              <div class="rounded-circle bg-warning bg-opacity-25 p-2 text-warning d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                <i class="bi bi-lightning-charge-fill"></i>
+              </div>
+              <span class="fw-bold">Fast Actions:</span>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+              <a href="create-invoice.html" class="btn btn-sm btn-primary shadow-sm">
+                <i class="bi bi-plus-circle me-1"></i> Create New Invoice
+              </a>
+              <a href="invoices.html" class="btn btn-sm btn-white bg-white border shadow-sm">
+                <i class="bi bi-list-check me-1 text-primary"></i> View All Invoices
+              </a>
+              <a href="clients.html" class="btn btn-sm btn-white bg-white border shadow-sm">
+                <i class="bi bi-person-lines-fill me-1 text-success"></i> Manage Clients
+              </a>
+              <a href="settings.html" class="btn btn-sm btn-white bg-white border shadow-sm">
+                <i class="bi bi-building-gear me-1 text-secondary"></i> Company Details
+              </a>
+              <a href="templates.html" class="btn btn-sm btn-white bg-white border shadow-sm">
+                <i class="bi bi-palette2 me-1 text-info"></i> Customize Template
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHARTS SECTION: 5 COLORFUL, INTUITIVE CHARTS & GRAPHS -->
+        <div class="row g-4 mb-4">
+          <!-- Chart 1: Monthly Revenue & Invoicing Trend -->
+          <div class="col-lg-8">
+            <div class="card ai-chart-card">
+              <div class="ai-chart-header">
+                <div>
+                  <h6 class="fw-bold mb-0">
+                    <i class="bi bi-graph-up text-primary me-2"></i>Monthly Revenue & Collection Trend
+                  </h6>
+                  <small class="text-muted">Invoiced revenue vs realized collections across FY 2026-27</small>
+                </div>
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">
+                  <i class="bi bi-record-circle-fill text-primary me-1"></i> Dynamic
+                </span>
+              </div>
+              <div class="ai-chart-body">
+                <div style="height: 300px; position: relative;">
+                  <canvas id="chart-revenue"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 2: Payment Realization & Status Distribution -->
+          <div class="col-lg-4">
+            <div class="card ai-chart-card">
+              <div class="ai-chart-header">
+                <div>
+                  <h6 class="fw-bold mb-0">
+                    <i class="bi bi-pie-chart-fill text-info me-2"></i>Invoice Status Distribution
+                  </h6>
+                  <small class="text-muted">Volume split by payment phase</small>
+                </div>
+                <span class="badge bg-light text-muted border">Real-time</span>
+              </div>
+              <div class="ai-chart-body">
+                <div style="height: 250px; position: relative;">
+                  <canvas id="chart-status"></canvas>
+                </div>
+                <div class="mt-2 text-center text-muted small" id="chart-status-subtext">
+                  Synchronized with active billing records
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 3: GST Tax Collection Breakdown (CGST, SGST, IGST) -->
+          <div class="col-lg-6">
+            <div class="card ai-chart-card">
+              <div class="ai-chart-header">
+                <div>
+                  <h6 class="fw-bold mb-0">
+                    <i class="bi bi-shield-check text-success me-2"></i>GST Tax Collection Breakdown
+                  </h6>
+                  <small class="text-muted">Inter-state (IGST 18%) vs Intra-state (CGST 9% + SGST 9%)</small>
+                </div>
+                <span class="badge bg-success-subtle text-success border border-success-subtle">Statutory</span>
+              </div>
+              <div class="ai-chart-body">
+                <div style="height: 270px; position: relative;">
+                  <canvas id="chart-gst"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 4: Top Clients by Revenue Contribution -->
+          <div class="col-lg-6">
+            <div class="card ai-chart-card">
+              <div class="ai-chart-header">
+                <div>
+                  <h6 class="fw-bold mb-0">
+                    <i class="bi bi-bar-chart-fill text-purple me-2" style="color: #8b5cf6;"></i>Top Clients by Billed Volume
+                  </h6>
+                  <small class="text-muted">Client portfolio ranked by cumulative invoice value</small>
+                </div>
+                <span class="badge bg-light text-muted border">Corporate</span>
+              </div>
+              <div class="ai-chart-body">
+                <div style="height: 270px; position: relative;">
+                  <canvas id="chart-clients"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 5: Cashflow Realization & Collection Efficiency -->
+          <div class="col-12">
+            <div class="card ai-chart-card">
+              <div class="ai-chart-header">
+                <div>
+                  <h6 class="fw-bold mb-0">
+                    <i class="bi bi-speedometer2 text-warning me-2"></i>Cashflow Realization & Recovery Velocity
+                  </h6>
+                  <small class="text-muted">Monthly comparison: Billed Revenue vs Remitted Cash vs Outstanding Aging</small>
+                </div>
+                <span class="badge bg-warning-subtle text-warning border border-warning-subtle">Liquidity</span>
+              </div>
+              <div class="ai-chart-body">
+                <div style="height: 260px; position: relative;">
+                  <canvas id="chart-cashflow"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENT INVOICES TABLE -->
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <div>
+              <span class="fw-bold"><i class="bi bi-clock-history me-2"></i>Recent Invoices</span>
+              <small class="text-muted ms-2 d-none d-sm-inline">Latest billing records</small>
+            </div>
+            <a href="invoices.html" class="btn btn-xs btn-outline-primary py-1 px-2 small">
+              View All <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Invoice No</th>
+                  <th>Client Name</th>
+                  <th>Invoice Date</th>
+                  <th>Due Date</th>
+                  <th class="text-end">Amount</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="recent-invoices-tbody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- VENDOR SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+  <!-- APPLICATION SCRIPTS -->
+  <script src="assets/js/default-assets.js"></script>
+  <script src="assets/js/excel-template-base64.js"></script>
+  <script src="assets/js/default-data.js"></script>
+  <script src="assets/js/calculations.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/template-engine.js"></script>
+  <script src="assets/js/export-pdf.js"></script>
+  <script src="assets/js/export-excel.js"></script>
+  <script src="assets/js/export-word.js"></script>
+  <script src="assets/js/export-csv.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      UI.init('dashboard');
+      Dashboard.init();
+    });
+  </script>
+</body>
+</html>
+

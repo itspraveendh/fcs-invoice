@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings & Data - FAB STEEL Invoice System</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/invoice-template.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/print.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- SIDEBAR -->
+    <aside class="app-sidebar" id="app-sidebar"></aside>
+
+    <!-- MAIN CONTAINER -->
+    <div class="app-main">
+      <!-- NAVBAR -->
+      <header class="app-navbar" id="app-navbar"></header>
+
+      <!-- CONTENT -->
+      <main class="app-content">
+        <!-- Header -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+          <div>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-1 small">
+                <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Settings</li>
+              </ol>
+            </nav>
+            <h3 class="fw-bold mb-0">Settings & Configuration</h3>
+            <p class="text-muted small mb-0">Company profile, remittance banks, service catalog, terms, and local database</p>
+          </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="card">
+          <div class="card-header p-0 border-bottom">
+            <ul class="nav nav-tabs card-header-tabs m-0 border-0" id="settingsTabs" role="tablist">
+              <li class="nav-item">
+                <button class="nav-link active px-4 py-3" data-bs-toggle="tab" data-bs-target="#tab-company">
+                  <i class="bi bi-building me-1"></i> Company Profile
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link px-4 py-3" data-bs-toggle="tab" data-bs-target="#tab-general">
+                  <i class="bi bi-gear me-1"></i> General & GST
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link px-4 py-3" data-bs-toggle="tab" data-bs-target="#tab-banks">
+                  <i class="bi bi-bank me-1"></i> Bank Accounts
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link px-4 py-3" data-bs-toggle="tab" data-bs-target="#tab-catalog">
+                  <i class="bi bi-box-seam me-1"></i> Service Catalog
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link px-4 py-3" data-bs-toggle="tab" data-bs-target="#tab-terms">
+                  <i class="bi bi-file-text me-1"></i> Terms Presets
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link px-4 py-3" data-bs-toggle="tab" data-bs-target="#tab-data">
+                  <i class="bi bi-database me-1"></i> Data & Backup
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-body p-4">
+            <div class="tab-content">
+              
+              <!-- TAB 1: COMPANY PROFILE -->
+              <div class="tab-pane fade show active" id="tab-company">
+                <form id="company-settings-form">
+                  <h5 class="fw-bold mb-3">Billing From Details (FAB STEEL ENGINEERING SERVICES)</h5>
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label" for="comp-name">Company Legal Name *</label>
+                      <input type="text" id="comp-name" class="form-control form-control-sm" required />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label" for="comp-gstin">GSTIN (15 Digits) *</label>
+                      <input type="text" id="comp-gstin" class="form-control form-control-sm text-uppercase font-monospace" required />
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label" for="comp-pan">PAN Number *</label>
+                      <input type="text" id="comp-pan" class="form-control form-control-sm text-uppercase font-monospace" required />
+                    </div>
+
+                    <div class="col-md-6">
+                      <label class="form-label" for="comp-address">Office Address *</label>
+                      <textarea id="comp-address" class="form-control form-control-sm" rows="3" required></textarea>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row g-2">
+                        <div class="col-6">
+                          <label class="form-label" for="comp-city">City</label>
+                          <input type="text" id="comp-city" class="form-control form-control-sm" />
+                        </div>
+                        <div class="col-6">
+                          <label class="form-label" for="comp-pin">PIN Code</label>
+                          <input type="text" id="comp-pin" class="form-control form-control-sm" />
+                        </div>
+                        <div class="col-6">
+                          <label class="form-label" for="comp-state">State</label>
+                          <input type="text" id="comp-state" class="form-control form-control-sm" />
+                        </div>
+                        <div class="col-6">
+                          <label class="form-label" for="comp-state-code">State Code</label>
+                          <input type="text" id="comp-state-code" class="form-control form-control-sm font-monospace" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <label class="form-label" for="comp-phone">Official Phone</label>
+                      <input type="text" id="comp-phone" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label" for="comp-email">Billing Email</label>
+                      <input type="email" id="comp-email" class="form-control form-control-sm" />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label" for="comp-udyam">UDYAM Number (MSME)</label>
+                      <input type="text" id="comp-udyam" class="form-control form-control-sm text-uppercase font-monospace" />
+                    </div>
+
+                    <!-- Company Images (Logo, Badge, Signature) -->
+                    <div class="col-12 mt-4 pt-3 border-top">
+                      <h6 class="fw-bold mb-3">Official Branding Assets (from Template)</h6>
+                      <div class="row g-4">
+                        <div class="col-md-4 text-center">
+                          <div class="p-3 border rounded bg-light mb-2">
+                            <img id="comp-logo-preview" src="assets/images/logo.png" alt="Logo" style="max-height: 80px; max-width: 140px; object-fit: contain;" />
+                          </div>
+                          <label class="btn btn-sm btn-outline-secondary w-100">
+                            <i class="bi bi-upload me-1"></i> Replace Logo
+                            <input type="file" id="upload-logo-input" accept="image/*" class="d-none" />
+                          </label>
+                          <small class="text-muted d-block mt-1">Header Left Logo</small>
+                        </div>
+
+                        <div class="col-md-4 text-center">
+                          <div class="p-3 border rounded bg-light mb-2">
+                            <img id="comp-badge-preview" src="assets/images/brand-badge.png" alt="Badge" style="max-height: 80px; max-width: 170px; object-fit: contain;" />
+                          </div>
+                          <label class="btn btn-sm btn-outline-secondary w-100">
+                            <i class="bi bi-upload me-1"></i> Replace Badge
+                            <input type="file" id="upload-badge-input" accept="image/*" class="d-none" />
+                          </label>
+                          <small class="text-muted d-block mt-1">Header Brand Badge</small>
+                        </div>
+
+                        <div class="col-md-4 text-center">
+                          <div class="p-3 border rounded bg-light mb-2">
+                            <img id="comp-sig-preview" src="assets/images/signature.jpg" alt="Signature" style="max-height: 80px; max-width: 140px; object-fit: contain;" />
+                          </div>
+                          <label class="btn btn-sm btn-outline-secondary w-100">
+                            <i class="bi bi-upload me-1"></i> Replace Signature
+                            <input type="file" id="upload-sig-input" accept="image/*" class="d-none" />
+                          </label>
+                          <small class="text-muted d-block mt-1">Authorised Signatory Seal</small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-12 mt-4 text-end">
+                      <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-save me-1"></i> Save Company Profile
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <!-- TAB 2: GENERAL & GST -->
+              <div class="tab-pane fade" id="tab-general">
+                <form id="general-settings-form">
+                  <h5 class="fw-bold mb-3">Invoice Numbering & Financial Year</h5>
+                  <div class="row g-3">
+                    <div class="col-md-4">
+                      <label class="form-label" for="setting-prefix">Invoice Prefix</label>
+                      <input type="text" id="setting-prefix" class="form-control form-control-sm font-monospace" value="FSE" />
+                      <small class="text-muted">e.g. FSE for FAB STEEL ENGINEERING</small>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label" for="setting-fy">Financial Year</label>
+                      <input type="text" id="setting-fy" class="form-control form-control-sm font-monospace" value="2026-27" />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label" for="setting-next-serial">Next Serial Number</label>
+                      <input type="number" id="setting-next-serial" class="form-control form-control-sm font-monospace" value="7" />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label" for="setting-currency">Currency Code</label>
+                      <select id="setting-currency" class="form-select form-select-sm">
+                        <option value="INR">INR (₹ - Indian Rupee)</option>
+                        <option value="USD">USD ($ - US Dollar)</option>
+                        <option value="EUR">EUR (€ - Euro)</option>
+                        <option value="AED">AED (AED - UAE Dirham)</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label" for="setting-payment-days">Default Payment Due Days</label>
+                      <input type="number" id="setting-payment-days" class="form-control form-control-sm" value="21" />
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label" for="setting-default-gst">Default GST Rate</label>
+                      <select id="setting-default-gst" class="form-select form-select-sm font-monospace">
+                        <option value="18">18% (Standard Engineering Services)</option>
+                        <option value="12">12%</option>
+                        <option value="5">5%</option>
+                        <option value="28">28%</option>
+                        <option value="0">0% (Nil / LUT)</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-center">
+                      <div class="form-check form-switch mt-3">
+                        <input class="form-check-input" type="checkbox" id="setting-round-off" checked />
+                        <label class="form-check-label small fw-bold" for="setting-round-off">Default Round-off Enabled</label>
+                      </div>
+                    </div>
+                    <div class="col-12 mt-4 text-end">
+                      <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-save me-1"></i> Save General Settings
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <!-- TAB 3: BANK ACCOUNTS -->
+              <div class="tab-pane fade" id="tab-banks">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="fw-bold mb-0">Remittance Bank Accounts</h5>
+                </div>
+                <div class="table-responsive mb-4">
+                  <table class="table table-bordered table-sm align-middle">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Bank Name</th>
+                        <th>Account Number</th>
+                        <th>IFSC Code</th>
+                        <th>Branch</th>
+                        <th>UPI ID</th>
+                        <th class="text-center">Default</th>
+                        <th class="text-end">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="banks-list-tbody">
+                      <!-- Loaded dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="card bg-light border">
+                  <div class="card-header bg-transparent fw-bold">Add New Bank Account</div>
+                  <div class="card-body">
+                    <form id="add-bank-form">
+                      <div class="row g-2">
+                        <div class="col-md-4">
+                          <label class="form-label" for="new-bank-name">Bank Name *</label>
+                          <input type="text" id="new-bank-name" class="form-control form-control-sm" placeholder="e.g. HDFC Bank" required />
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-label" for="new-bank-holder">Account Holder Name</label>
+                          <input type="text" id="new-bank-holder" class="form-control form-control-sm" value="FAB STEEL ENGINEERING SERVICES" />
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-label" for="new-bank-acc">Account Number *</label>
+                          <input type="text" id="new-bank-acc" class="form-control form-control-sm font-monospace" required />
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-label" for="new-bank-ifsc">IFSC Code *</label>
+                          <input type="text" id="new-bank-ifsc" class="form-control form-control-sm text-uppercase font-monospace" required />
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-label" for="new-bank-branch">Branch</label>
+                          <input type="text" id="new-bank-branch" class="form-control form-control-sm" />
+                        </div>
+                        <div class="col-md-4">
+                          <label class="form-label" for="new-bank-upi">UPI ID</label>
+                          <input type="text" id="new-bank-upi" class="form-control form-control-sm font-monospace" placeholder="e.g. 8300621360@okaxis" />
+                        </div>
+                        <div class="col-12 mt-3 text-end">
+                          <button type="submit" class="btn btn-sm btn-primary">
+                            <i class="bi bi-plus-lg me-1"></i> Add Bank Account
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TAB 4: SERVICE CATALOG -->
+              <div class="tab-pane fade" id="tab-catalog">
+                <h5 class="fw-bold mb-3">Product & Engineering Service Catalog</h5>
+                <div class="table-responsive mb-4">
+                  <table class="table table-bordered table-sm align-middle">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Description</th>
+                        <th class="text-center">HSN/SAC</th>
+                        <th class="text-center">Unit</th>
+                        <th class="text-end">Standard Rate</th>
+                        <th class="text-center">GST Rate</th>
+                        <th class="text-end">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="catalog-list-tbody">
+                      <!-- Loaded dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="card bg-light border">
+                  <div class="card-header bg-transparent fw-bold">Add Service to Catalog</div>
+                  <div class="card-body">
+                    <form id="add-catalog-form">
+                      <div class="row g-2">
+                        <div class="col-md-5">
+                          <label class="form-label" for="catalog-desc">Service Description *</label>
+                          <input type="text" id="catalog-desc" class="form-control form-control-sm" required />
+                        </div>
+                        <div class="col-md-2">
+                          <label class="form-label" for="catalog-hsn">HSN / SAC</label>
+                          <input type="text" id="catalog-hsn" class="form-control form-control-sm text-center" value="998333" />
+                        </div>
+                        <div class="col-md-2">
+                          <label class="form-label" for="catalog-unit">Unit</label>
+                          <select id="catalog-unit" class="form-select form-select-sm">
+                            <option value="TON">TON</option>
+                            <option value="NOS">NOS</option>
+                            <option value="SET">SET</option>
+                            <option value="JOB">JOB</option>
+                            <option value="HOURS">HOURS</option>
+                          </select>
+                        </div>
+                        <div class="col-md-2">
+                          <label class="form-label" for="catalog-rate">Rate (₹) *</label>
+                          <input type="number" step="any" id="catalog-rate" class="form-control form-control-sm text-end" required />
+                        </div>
+                        <div class="col-md-1">
+                          <label class="form-label" for="catalog-gst-rate">GST %</label>
+                          <input type="number" id="catalog-gst-rate" class="form-control form-control-sm text-center" value="18" />
+                        </div>
+                        <div class="col-12 mt-3 text-end">
+                          <button type="submit" class="btn btn-sm btn-primary">
+                            <i class="bi bi-plus-lg me-1"></i> Add to Catalog
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TAB 5: TERMS PRESETS -->
+              <div class="tab-pane fade" id="tab-terms">
+                <h5 class="fw-bold mb-3">Terms & Conditions Presets</h5>
+                <p class="small text-muted mb-3">Default conditions extracted from the Excel template and alternative presets:</p>
+                <div id="terms-presets-list">
+                  <!-- Loaded dynamically -->
+                </div>
+              </div>
+
+              <!-- TAB 6: DATA & BACKUP -->
+              <div class="tab-pane fade" id="tab-data">
+                <h5 class="fw-bold mb-3">Local Database Management & Backup</h5>
+                <div class="alert alert-info">
+                  <i class="bi bi-info-circle-fill me-2"></i>
+                  All application records are securely stored in your local browser storage (LocalStorage). This frontend architecture is completely prepared for plug-and-play PHP + MySQL backend integration without redesigning any UI or calculation logic.
+                </div>
+
+                <div class="row g-4 mt-2">
+                  <div class="col-md-6">
+                    <div class="card h-100 p-3 border">
+                      <h6 class="fw-bold"><i class="bi bi-cloud-arrow-down text-primary me-2"></i>Export System Backup</h6>
+                      <p class="small text-muted mb-3">Download a complete JSON snapshot of all invoices, clients, templates, catalog items, and settings.</p>
+                      <button class="btn btn-outline-primary btn-sm mt-auto" onclick="SettingsManager.downloadFullBackup()">
+                        <i class="bi bi-download me-1"></i> Download Backup JSON
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="card h-100 p-3 border">
+                      <h6 class="fw-bold"><i class="bi bi-cloud-arrow-up text-success me-2"></i>Restore Backup</h6>
+                      <p class="small text-muted mb-3">Restore previously saved invoices and company configurations from a JSON backup file.</p>
+                      <label class="btn btn-outline-success btn-sm mt-auto mb-0">
+                        <i class="bi bi-upload me-1"></i> Choose Backup File
+                        <input type="file" id="backup-file-input" accept=".json" class="d-none" />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="card h-100 p-3 border border-warning">
+                      <h6 class="fw-bold text-warning"><i class="bi bi-arrow-counterclockwise me-2"></i>Reset to Factory Demo State</h6>
+                      <p class="small text-muted mb-3">Re-initializes the application with the original FAB Steel sample invoice (FSE-2026-27-006) and official templates.</p>
+                      <button class="btn btn-warning btn-sm mt-auto" onclick="SettingsManager.resetAllDemoData()">
+                        <i class="bi bi-arrow-repeat me-1"></i> Reset Demo Data
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="card h-100 p-3 border border-danger">
+                      <h6 class="fw-bold text-danger"><i class="bi bi-trash3 me-2"></i>Clear All Stored Data</h6>
+                      <p class="small text-muted mb-3">Permanently wipe all records from this browser. Use with caution.</p>
+                      <button class="btn btn-outline-danger btn-sm mt-auto" onclick="SettingsManager.clearAllData()">
+                        <i class="bi bi-exclamation-triangle me-1"></i> Wipe Local Database
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- VENDOR SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- APPLICATION SCRIPTS -->
+  <script src="assets/js/default-assets.js"></script>
+  <script src="assets/js/default-data.js"></script>
+  <script src="assets/js/calculations.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/export-csv.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/settings-manager.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      UI.init('settings');
+      SettingsManager.init();
+    });
+  </script>
+</body>
+</html>
+

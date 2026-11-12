@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Creator - FAB STEEL Invoice System</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/invoice-template.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/print.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- SIDEBAR -->
+    <aside class="app-sidebar" id="app-sidebar"></aside>
+
+    <!-- MAIN CONTAINER -->
+    <div class="app-main">
+      <!-- NAVBAR -->
+      <header class="app-navbar" id="app-navbar"></header>
+
+      <!-- CONTENT -->
+      <main class="app-content">
+        <!-- Top Toolbar -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+          <div>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-1 small">
+                <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a href="invoices.html" class="text-decoration-none">Invoices</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Invoice Creator</li>
+              </ol>
+            </nav>
+            <h4 class="fw-bold mb-0">Invoice Creator Workspace</h4>
+          </div>
+          <div class="d-flex flex-wrap gap-2 mt-2 mt-sm-0">
+            <button class="btn btn-outline-secondary btn-sm" onclick="InvoiceBuilder.printInvoice()">
+              <i class="bi bi-printer me-1"></i> Print
+            </button>
+            <div class="dropdown">
+              <button class="btn btn-outline-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="bi bi-download me-1"></i> Export As
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                <li><a class="dropdown-item" href="javascript:void(0)" onclick="InvoiceBuilder.exportPdf()"><i class="bi bi-file-earmark-pdf me-2 text-danger"></i> PDF Document (.pdf)</a></li>
+                <li><a class="dropdown-item" href="javascript:void(0)" onclick="InvoiceBuilder.exportExcel()"><i class="bi bi-file-earmark-excel me-2 text-success"></i> Excel Spreadsheet (.xlsx)</a></li>
+                <li><a class="dropdown-item" href="javascript:void(0)" onclick="InvoiceBuilder.exportWord()"><i class="bi bi-file-earmark-word me-2 text-primary"></i> Word Document (.docx)</a></li>
+                <li><a class="dropdown-item" href="javascript:void(0)" onclick="InvoiceBuilder.exportCsv()"><i class="bi bi-file-earmark-spreadsheet me-2 text-info"></i> CSV Line Items (.csv)</a></li>
+              </ul>
+            </div>
+            <button class="btn btn-primary btn-sm px-3 shadow-sm" onclick="InvoiceBuilder.saveInvoice()">
+              <i class="bi bi-check-lg me-1"></i> Save Invoice
+            </button>
+          </div>
+        </div>
+
+        <!-- TWO-PANEL WORKSPACE -->
+        <div class="creator-container">
+          
+          <!-- LEFT PANEL: EDITING CONTROLS -->
+          <div class="creator-editor-panel">
+            
+            <!-- SECTION A: INVOICE INFORMATION -->
+            <div class="card mb-3">
+              <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-info-circle text-primary me-2"></i>Invoice Details & Meta</span>
+                <span class="badge bg-secondary">Mandatory GST Header</span>
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <label class="form-label" for="inv-number">Invoice Number *</label>
+                    <input type="text" id="inv-number" class="form-control form-control-sm font-monospace fw-bold" placeholder="e.g. FSE-2026-27-006" />
+                    <div id="inv-number-feedback" class="small mt-1" style="display: none;"></div>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="inv-date">Invoice Date *</label>
+                    <input type="date" id="inv-date" class="form-control form-control-sm" />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="inv-due-date">Due Date</label>
+                    <input type="date" id="inv-due-date" class="form-control form-control-sm" />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="inv-po-number">Purchase Order Number</label>
+                    <input type="text" id="inv-po-number" class="form-control form-control-sm" placeholder="e.g. PO/2026/098" />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="inv-po-value">Value of PO (₹)</label>
+                    <input type="number" step="any" id="inv-po-value" class="form-control form-control-sm" placeholder="e.g. 140053" />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="inv-ref-number">Reference Number</label>
+                    <input type="text" id="inv-ref-number" class="form-control form-control-sm" placeholder="e.g. REF-INFRA-889" />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="inv-quote-ref">Quote Reference No</label>
+                    <input type="text" id="inv-quote-ref" class="form-control form-control-sm" placeholder="PD-FAB-2026-27-RFQ-01" />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="inv-reverse-charge">Reverse Charge (Y/N)</label>
+                    <select id="inv-reverse-charge" class="form-select form-select-sm">
+                      <option value="N">No (Standard Forward Charge)</option>
+                      <option value="Y">Yes (Tax Payable by Recipient)</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="inv-type">Invoice Document Type</label>
+                    <select id="inv-type" class="form-select form-select-sm">
+                      <option value="Tax Invoice">Tax Invoice</option>
+                      <option value="Proforma Invoice">Proforma Invoice</option>
+                      <option value="Quotation">Quotation / Estimate</option>
+                      <option value="Delivery Challan">Delivery Challan</option>
+                      <option value="Credit Note">Credit Note</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="inv-copy-type">Copy Type</label>
+                    <select id="inv-copy-type" class="form-select form-select-sm">
+                      <option value="Original for Recipient">Original for Recipient</option>
+                      <option value="Duplicate for Transporter">Duplicate for Transporter</option>
+                      <option value="Triplicate for Supplier">Triplicate for Supplier</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="inv-status">Invoice Status</label>
+                    <select id="inv-status" class="form-select form-select-sm">
+                      <option value="Draft">Draft</option>
+                      <option value="Sent">Sent</option>
+                      <option value="Paid">Paid</option>
+                      <option value="Partially Paid">Partially Paid</option>
+                      <option value="Overdue">Overdue</option>
+                      <option value="Cancelled">Cancelled</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label" for="inv-template-select">Design Template</label>
+                    <select id="inv-template-select" class="form-select form-select-sm">
+                      <!-- Loaded dynamically -->
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION B & C: CLIENT (BILLING TO) & COMPANY DETAILS -->
+            <div class="card mb-3">
+              <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-people text-primary me-2"></i>Client Information (Detail of Billing TO)</span>
+                <button type="button" class="btn btn-xs btn-outline-primary" onclick="InvoiceBuilder.populateClientSelect()">
+                  <i class="bi bi-arrow-repeat me-1"></i> Refresh
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="row g-3 mb-3">
+                  <div class="col-12">
+                    <label class="form-label" for="inv-client-select">Select Existing Client</label>
+                    <select id="inv-client-select" class="form-select form-select-sm">
+                      <!-- Filled dynamically -->
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label" for="client-name">Client / Company Name *</label>
+                    <input type="text" id="client-name" class="form-control form-control-sm" placeholder="e.g. Apex Structural Infra Pvt Ltd" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label" for="client-gstin">JOB GSTIN</label>
+                    <input type="text" id="client-gstin" class="form-control form-control-sm text-uppercase font-monospace" placeholder="24AAACA1234F1Z5" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label" for="client-pan">JOB PAN</label>
+                    <input type="text" id="client-pan" class="form-control form-control-sm text-uppercase font-monospace" placeholder="AAACA1234F" />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="client-address">Billing Address</label>
+                    <textarea id="client-address" class="form-control form-control-sm" rows="2" placeholder="Full street, area, city, pin code"></textarea>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label" for="client-state">State</label>
+                    <input type="text" id="client-state" class="form-control form-control-sm" placeholder="e.g. Gujarat" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label" for="client-state-code">State Code</label>
+                    <input type="text" id="client-state-code" class="form-control form-control-sm font-monospace" placeholder="e.g. 24" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION D: PRODUCT / SERVICE ITEM TABLE -->
+            <div class="card mb-3">
+              <div class="card-header bg-light d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="fw-bold"><i class="bi bi-table text-primary me-2"></i>Line Items</span>
+                  <div class="d-none d-md-flex align-items-center gap-1 ms-2 border-start ps-2">
+                    <span class="small text-muted fw-semibold me-1"><i class="bi bi-percent"></i> GST Rate:</span>
+                    <div class="btn-group btn-group-sm">
+                      <button type="button" class="btn btn-outline-primary btn-sm py-0 px-2" onclick="InvoiceBuilder.setAllGstRate(18)" title="Apply 18% GST to all items">18%</button>
+                      <button type="button" class="btn btn-outline-primary btn-sm py-0 px-2" onclick="InvoiceBuilder.setAllGstRate(12)" title="Apply 12% GST to all items">12%</button>
+                      <button type="button" class="btn btn-outline-primary btn-sm py-0 px-2" onclick="InvoiceBuilder.setAllGstRate(5)" title="Apply 5% GST to all items">5%</button>
+                      <button type="button" class="btn btn-outline-primary btn-sm py-0 px-2" onclick="InvoiceBuilder.setAllGstRate(28)" title="Apply 28% GST to all items">28%</button>
+                      <button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2" onclick="InvoiceBuilder.setAllGstRate(0)" title="Apply 0% GST to all items">0%</button>
+                      <button type="button" class="btn btn-outline-info btn-sm py-0 px-2" onclick="InvoiceBuilder.promptCustomGstRate()" title="Custom GST %">Custom...</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <select id="catalog-quick-add" class="form-select form-select-sm" style="max-width: 210px;">
+                    <!-- Populated dynamically -->
+                  </select>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="InvoiceBuilder.openManageColumnsModal()">
+                    <i class="bi bi-layout-three-columns me-1"></i> Columns
+                  </button>
+                  <button type="button" class="btn btn-sm btn-primary" onclick="InvoiceBuilder.addLineItem()">
+                    <i class="bi bi-plus-lg me-1"></i> Add Row
+                  </button>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-sm align-middle mb-0" id="editor-line-items-table">
+                    <thead class="table-light">
+                      <tr class="small text-center">
+                        <th style="width: 35px;">#</th>
+                        <th>Product / Service Description</th>
+                        <th>HSN/SAC</th>
+                        <th>Qty</th>
+                        <th>TON</th>
+                        <th>Rate (₹)</th>
+                        <th>Disc (₹)</th>
+                        <th style="width: 95px;">GST %</th>
+                        <th style="width: 110px;">Tax Type</th>
+                        <th class="text-end">Line Total (₹)</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="line-items-tbody">
+                      <!-- Filled dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION E: TOTALS, CHARGES & SUMMARY -->
+            <div class="card mb-3">
+              <div class="card-header bg-light">
+                <i class="bi bi-calculator text-primary me-2"></i>Totals & Adjustments Calculation
+              </div>
+              <div class="card-body">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <div class="p-3 bg-light rounded border mb-3">
+                      <div class="d-flex justify-content-between mb-1 small">
+                        <span>Total Amount before Tax:</span>
+                        <strong id="summary-taxable">₹ 0.00</strong>
+                      </div>
+                      <div class="d-flex justify-content-between mb-1 small text-muted">
+                        <span>CGST Total:</span>
+                        <span id="summary-cgst">₹ 0.00</span>
+                      </div>
+                      <div class="d-flex justify-content-between mb-1 small text-muted">
+                        <span>SGST Total:</span>
+                        <span id="summary-sgst">₹ 0.00</span>
+                      </div>
+                      <div class="d-flex justify-content-between mb-1 small text-muted">
+                        <span>IGST Total:</span>
+                        <span id="summary-igst">₹ 0.00</span>
+                      </div>
+                      <div class="d-flex justify-content-between mb-1 small fw-bold">
+                        <span>Total Tax Amount:</span>
+                        <span id="summary-tax">₹ 0.00</span>
+                      </div>
+                      <div class="d-flex justify-content-between mb-1 small text-muted">
+                        <span>Round Off:</span>
+                        <span id="summary-roundoff">₹ 0.00</span>
+                      </div>
+                      <div class="d-flex justify-content-between pt-2 border-top fs-5 fw-bold text-primary">
+                        <span>Grand Total:</span>
+                        <span id="summary-grand-total">₹ 0.00</span>
+                      </div>
+                      <div class="d-flex justify-content-between pt-1 small text-danger fw-bold">
+                        <span>Balance Due:</span>
+                        <span id="summary-balance-due">₹ 0.00</span>
+                      </div>
+                    </div>
+
+                    <div class="p-2 border rounded bg-white">
+                      <small class="text-muted fw-bold d-block text-uppercase">Amount in Words:</small>
+                      <div class="fw-bold text-secondary small mt-1" id="summary-words">-</div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="mb-3">
+                      <label class="form-label" for="inv-additional-charges">Additional Charges (Freight / Handling)</label>
+                      <input type="number" step="any" id="inv-additional-charges" class="form-control form-control-sm" placeholder="0" />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label" for="inv-amount-paid">Amount Paid by Client (₹)</label>
+                      <input type="number" step="any" id="inv-amount-paid" class="form-control form-control-sm" placeholder="0" />
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                      <input class="form-check-input" type="checkbox" id="inv-round-off" checked />
+                      <label class="form-check-label small" for="inv-round-off">Enable Automatic Round-off to Nearest Rupee</label>
+                    </div>
+                    <div>
+                      <label class="form-label" for="inv-notes">Invoice Notes / Customer Remarks</label>
+                      <textarea id="inv-notes" class="form-control form-control-sm" rows="2" placeholder="Thank you for your business!"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION F: BANK DETAILS & TERMS -->
+            <div class="card mb-4">
+              <div class="card-header bg-light">
+                <i class="bi bi-bank text-primary me-2"></i>Bank Remittance & Terms & Conditions
+              </div>
+              <div class="card-body">
+                <div class="row g-3 mb-3">
+                  <div class="col-md-6">
+                    <label class="form-label" for="inv-bank-select">Select Remittance Bank Account</label>
+                    <select id="inv-bank-select" class="form-select form-select-sm">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="inv-terms-preset-select">Load Terms & Conditions Preset</label>
+                    <select id="inv-terms-preset-select" class="form-select form-select-sm">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
+                </div>
+
+                <div class="border rounded p-3 bg-light">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="small fw-bold">Active Terms & Conditions:</span>
+                    <div>
+                      <button type="button" class="btn btn-xs btn-outline-primary" onclick="InvoiceBuilder.addTerm()">
+                        <i class="bi bi-plus-lg me-1"></i> Add Condition
+                      </button>
+                      <button type="button" class="btn btn-xs btn-outline-secondary ms-1" onclick="InvoiceBuilder.saveCurrentAsTermsPreset()">
+                        <i class="bi bi-bookmark me-1"></i> Save as Preset
+                      </button>
+                    </div>
+                  </div>
+                  <div id="terms-list-container">
+                    <!-- Loaded dynamically -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT PANEL: LIVE INVOICE PREVIEW -->
+          <div class="creator-preview-panel">
+            <!-- Preview Controls Bar -->
+            <div class="card p-2 mb-2 preview-control-bar">
+              <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="badge bg-primary-subtle text-primary border">LIVE PREVIEW</span>
+                  <select id="preview-page-format" class="form-select form-select-sm" style="width: 140px;" title="Document Size & Orientation">
+                    <option value="a4-portrait" selected>A4 Portrait</option>
+                    <option value="a4-landscape">A4 Landscape</option>
+                    <option value="a5-portrait">A5 Portrait</option>
+                    <option value="letter-portrait">Letter Portrait</option>
+                    <option value="legal-portrait">Legal Portrait</option>
+                  </select>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                  <label for="preview-zoom-select" class="small text-muted mb-0">Zoom:</label>
+                  <select id="preview-zoom-select" class="form-select form-select-sm" style="width: 80px;">
+                    <option value="50">50%</option>
+                    <option value="75">75%</option>
+                    <option value="100" selected>100%</option>
+                    <option value="125">125%</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Viewport Container -->
+            <div class="preview-scroll-viewport zoom-100" id="preview-viewport">
+              <div id="invoice-preview-container">
+                <!-- RENDERED BY TEMPLATE ENGINE -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- MANAGE COLUMNS MODAL -->
+  <div class="modal fade" id="manageColumnsModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-layout-three-columns me-2 text-primary"></i>Manage Table Columns</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p class="small text-muted mb-3">Configure table fields or add custom project columns (e.g. Drawing No, Heat Mark, Rev).</p>
+          
+          <h6 class="small fw-bold text-uppercase text-muted mb-2">Standard Optional Columns:</h6>
+          <div class="list-group mb-3">
+            <label class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-bold small">TON (Weight Column)</div>
+                <small class="text-muted">Display metric tonnage column for structural steel</small>
+              </div>
+              <input class="form-check-input me-1" type="checkbox" id="col-toggle-ton" checked onchange="InvoiceBuilder.toggleStandardCol('ton', this.checked)">
+            </label>
+            <label class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-bold small">Discount Column</div>
+                <small class="text-muted">Display item discount value before taxable amount</small>
+              </div>
+              <input class="form-check-input me-1" type="checkbox" id="col-toggle-discount" checked onchange="InvoiceBuilder.toggleStandardCol('discount', this.checked)">
+            </label>
+            <label class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-bold small">HSN/SAC Code Column</div>
+                <small class="text-muted">Display 6-digit GST accounting code</small>
+              </div>
+              <input class="form-check-input me-1" type="checkbox" id="col-toggle-hsn" checked onchange="InvoiceBuilder.toggleStandardCol('hsn', this.checked)">
+            </label>
+          </div>
+
+          <h6 class="small fw-bold text-uppercase text-muted mb-2">Add Custom Column:</h6>
+          <div class="input-group input-group-sm mb-3">
+            <input type="text" id="new-custom-column-name" class="form-control" placeholder="e.g. Drawing No, Heat Mark, Rev No">
+            <button class="btn btn-primary" type="button" onclick="InvoiceBuilder.addCustomColumn()">
+              <i class="bi bi-plus-lg me-1"></i> Add
+            </button>
+          </div>
+
+          <div id="custom-columns-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VENDOR SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+
+  <!-- APPLICATION SCRIPTS -->
+  <script src="assets/js/default-assets.js"></script>
+  <script src="assets/js/excel-template-base64.js"></script>
+  <script src="assets/js/default-data.js"></script>
+  <script src="assets/js/calculations.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/template-engine.js"></script>
+  <script src="assets/js/export-pdf.js"></script>
+  <script src="assets/js/export-excel.js"></script>
+  <script src="assets/js/export-word.js"></script>
+  <script src="assets/js/export-csv.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/invoice-builder.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      UI.init('create-invoice');
+      InvoiceBuilder.init();
+    });
+  </script>
+</body>
+</html>
+

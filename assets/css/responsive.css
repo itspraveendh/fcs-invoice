@@ -1,0 +1,73 @@
+/**
+ * Responsive Design Overrides
+ * Mobile, tablet and narrow desktop adjustments.
+ */
+
+@media (max-width: 991.98px) {
+  .app-sidebar {
+    transform: translateX(-100%);
+  }
+
+  body.sidebar-open .app-sidebar {
+    transform: translateX(0);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+  }
+
+  body.sidebar-open::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1030;
+  }
+
+  .app-main {
+    margin-left: 0;
+  }
+
+  .navbar-search-wrapper {
+    width: 200px;
+  }
+
+  .creator-container {
+    flex-direction: column;
+  }
+
+  .creator-preview-panel {
+    width: 100%;
+    position: static;
+    max-height: none;
+    margin-top: 2rem;
+  }
+
+  .preview-scroll-viewport {
+    padding: 0.5rem;
+    overflow-x: auto;
+  }
+
+  .invoice-page {
+    transform: scale(0.65);
+    transform-origin: top left;
+    margin-bottom: -100px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .app-content {
+    padding: 1rem 0.75rem;
+  }
+
+  .navbar-search-wrapper {
+    display: none;
+  }
+
+  .invoice-page {
+    transform: scale(0.45);
+    transform-origin: top left;
+    margin-bottom: -150px;
+  }
+}
+
